@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Book Activities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>Date</th>
+      <th>Activity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @book_activities.each do |book_activity| %>
+      <tr>
+        <td><%= book_activity.book.title %></td>
+        <td><%= book_activity.date %></td>
+        <td><%= book_activity.activity === 'prestado' ? 'Prestado' : 'En estante' %></td>
+        <td><%= link_to 'Show', book_activity %></td>
+        <td><%= link_to 'Destroy', book_activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book Activity', new_book_activity_path %>

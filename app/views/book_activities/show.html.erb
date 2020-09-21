@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @book_activity.book.title %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @book_activity.date %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @book_activity.activity === 'prestado' ? 'Prestado' : 'En estante' %>
+</p>
+
+<%= link_to 'Back', book_activities_path %>

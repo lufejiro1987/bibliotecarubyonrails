@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Books</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Title<br>
+        <% if params[:sort] && params[:sort] === 'desc' %>
+          <%= link_to "🔼", request.query_parameters.merge({sort: 'asc'}) %>
+        <% else %>
+          <%= link_to "🔽", request.query_parameters.merge({sort: 'desc'}) %>
+        <% end %>
+      </th>
+      <th>Author</th>
+      <th>
+        Status<br>
+        <%= select_tag 'status', options_for_select([["Todos", ""], ["En estante", "estante"], ["Prestado", "prestado"]], params[:status]) %>
+      </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.status === 'prestado' ? 'Prestado' : 'En estante'%></td>
+        <td><%= link_to 'Show', book %></td>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book', new_book_path %>
+
+<script>
+  function updateUrlParameter(uri, key, value) {
+    let i = uri.indexOf('#');
+    let hash = i === -1 ? ''  : uri.substr(i);
+    uri = i === -1 ? uri : uri.substr(0, i);
+
+    let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    let separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        uri = uri + separator + key + "=" + value;
+    }
+    return uri + hash;
+  }
+
+  (function() {
+    document.getElementById("status").addEventListener('change', function() {
+      let selectValue = document.getElementById("status").value;
+      Turbolinks.visit(updateUrlParameter(window.location.href, 'status', selectValue));
+    }, false);
+  })();
+</script>

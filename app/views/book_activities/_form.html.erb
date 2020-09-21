@@ -1,0 +1,32 @@
+<%= form_with(model: book_activity, local: true) do |form| %>
+  <% if book_activity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book_activity.errors.count, "error") %> prohibited this book_activity from being saved:</h2>
+
+      <ul>
+        <% book_activity.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :book_id %>
+    <%= form.select :book_id, options_from_collection_for_select(@books, :id, :title) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :activity %>
+    <%= form.select :activity, options_for_select([["Presté el libro", "prestado"], ["Devolvieron el libro", "estante"]], book_activity.activity) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
